@@ -1,0 +1,52 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\jj_ictprg433_at2\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|solutionrelative:jj_ictprg433_at2\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\jj_ictprg433_at2\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|solutionrelative:jj_ictprg433_at2\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "JJ_ICTPRG433_AT2\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml",
+              "RelativeToolTip": "JJ_ICTPRG433_AT2\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-05T13:14:29.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "RelativeToolTip": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T13:14:26.055Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

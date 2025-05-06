@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "JJ_ICTPRG433_440_AT2/1.0.0": {
+        "runtime": {
+          "JJ_ICTPRG433_440_AT2.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "JJ_ICTPRG433_440_AT2/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
