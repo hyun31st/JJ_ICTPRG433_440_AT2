@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JJ_ICTPRG433_440_AT2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5c6657b98a977218d97d05e920cefa7de4af02d")]
 [assembly: System.Reflection.AssemblyProductAttribute("JJ_ICTPRG433_440_AT2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JJ_ICTPRG433_440_AT2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -19,7 +19,14 @@ namespace JJ_ICTPRG433_440_AT2
         public MainWindow()
         {
             InitializeComponent();
-            MessageBox.Show("Testing");
+            lbl_MainWindowDate.Content = "Today: " + DateTime.Now.ToLongDateString();
+
+            
+        }
+
+        private void AssignContractorToAJob_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("xxx");
         }
     }
 }
