@@ -1,13 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\hyun3\OneDrive - TAFE\_Semester02\01_Tuesday_ICTPRG433\Assessment 2 C# Project\JJ_ICTPRG433_AT2\JJ_ICTPRG433_AT2\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\AddContractor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AddContractorHours.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AddJob.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AddJobFilterbyCostRange.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AddContractor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddContractorHours.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddJob.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddJobFilterbyCostRange.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

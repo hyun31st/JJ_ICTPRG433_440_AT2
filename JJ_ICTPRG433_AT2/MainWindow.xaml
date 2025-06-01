@@ -6,59 +6,81 @@
         xmlns:local="clr-namespace:JJ_ICTPRG433_440_AT2"
         mc:Ignorable="d"
         Title="Contractor &amp; Job Assignment Manager" Height="600" Width="1400">
-    <Grid
->
-        <Grid
-Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="3"
->
+    <Grid>
+        <Grid Grid.Row="4" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="23*"/>
-                <RowDefinition Height="243*"/>
-                <RowDefinition Height="26*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Label x:Name="lbl_MainWindowDate" Content="Date: xx/xx/xxxx(today)" HorizontalAlignment="Left" Margin="19,0,0,0" 
-                   VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Height="50" Width="446"/>
-            <Label Content="Contractor" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Grid.Row="1" 
+
+            <Label x:Name="lbl_MainWindowDate" Content="Date: xx/xx/xxxx(today)" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" 
+                   VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Height="50" Width="450"/>
+
+
+            <Label Content="Contractor" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="1" 
                    Height="40" Width="125" FontSize="22"/>
-            <Label Content="Label" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" 
-                   Height="26" Width="38"/>
-            <Label Content="Jobs" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Grid.Row="1" 
-                   Height="40" Width="98" FontSize="22" Grid.Column="2"/>
+            <ComboBox x:Name="ComboBoxContractorFilter" HorizontalAlignment="Right" Height="25" Margin="0,0,75,0" Grid.Row="1" VerticalAlignment="Center" Width="215" Grid.Column="0" SelectionChanged="ComboBoxContractorFilter_SelectionChanged_1"/>
+
+            <Button x:Name="ButtonContractorShowAll" Content="Show All" FontSize="15" HorizontalAlignment="Right" Height="25" Margin="0,0,5,0" Grid.Row="1" 
+                    VerticalAlignment="Center" Width="65" Click="ButtonContractorShowAll_Click"/>
+            <Button x:Name="ButtonContractorAdd" Content="Add" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="130,0,0,0" Grid.Row="3" 
+                    VerticalAlignment="Center" Width="120" Click="ButtonContractorAdd_Click"/>
+            <Button x:Name="ButtonContractorRemove" Content="Remove" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="-130,0,0,0" Grid.Row="3" 
+                    VerticalAlignment="Center" Width="120"  Click="ButtonContractorRemove_Click"/>
+
+
+
             <Button x:Name="btn_AssignContractorToAJob" FontSize="20" Content="   Assign&#xA;Contractor&#xA;  to a Job" Grid.Column="1" 
-                    HorizontalAlignment="Center" Height="100" Grid.Row="1" Width="120" Click="AssignContractorToAJob_Click" 
-                    VerticalAlignment="Top" Margin="0,183,0,0"/>
-            <DataGrid x:Name="dgrid_Contractor" ColumnWidth="*" HorizontalAlignment="Center" Height="400" Margin="0,75,0,0" Grid.Row="1" 
-                      VerticalAlignment="Top" Width="600" d:ItemsSource="{d:SampleData ItemCount=5}">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <ComboBox HorizontalAlignment="Right" Height="30" Margin="0,37,166,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-            <Button Content="Show All" FontSize="18" HorizontalAlignment="Right" Height="30" Margin="0,37,41,0" Grid.Row="1" 
-                    VerticalAlignment="Top" Width="120"/>
-            <DataGrid x:Name="dgrid_Contractor_Copy" ColumnWidth="*" HorizontalAlignment="Center" Height="400" Margin="0,75,0,0" 
-                      Grid.Row="1" VerticalAlignment="Top" Width="600" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="2">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <ComboBox HorizontalAlignment="Right" Height="30" Margin="0,35,162,0" Grid.Row="1" 
-                      VerticalAlignment="Top" Width="120" Grid.Column="2"/>
-            <Button Content="Show All" FontSize="18" HorizontalAlignment="Right" Height="30" Margin="0,35,37,0" Grid.Row="1" 
-                    VerticalAlignment="Top" Width="120" Grid.Column="2"/>
-            <Button Content="Add" FontSize="18" HorizontalAlignment="Left" Height="30" Margin="262,6,0,0" Grid.Row="2" 
-                    VerticalAlignment="Top" Width="120"/>
-            <Button Content="Remove" FontSize="18" HorizontalAlignment="Left" Height="30" Margin="412,6,0,0" Grid.Row="2" 
-                    VerticalAlignment="Top" Width="120"/>
-            <Button Content="Add" FontSize="18" HorizontalAlignment="Left" Height="30" Margin="252,6,0,0" Grid.Row="2" 
-                    VerticalAlignment="Top" Width="120" Grid.Column="2"/>
-            <Button Content="Remove" FontSize="18" HorizontalAlignment="Left" Height="30" Margin="402,6,0,0" Grid.Row="2" 
-                    VerticalAlignment="Top" Width="120" Grid.Column="2"/>
+        HorizontalAlignment="Center" Height="100" Grid.Row="2" Width="120" Click="ButtonAssignContractorToAJob_Click" 
+        VerticalAlignment="Center" Margin="0,0,0,0"/>
+
+
+
+            <Label Content="Jobs" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"
+                    Height="40" Width="125" FontSize="22"/>
+            <Image HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,300,0" Source="/filter.png" Width="20" Grid.Row="1" Grid.Column="2"/>
+            <ComboBox x:Name="ComboBoxJobFilter" HorizontalAlignment="Right" Height="25" Margin="0,0,75,0" Grid.Row="1" 
+          VerticalAlignment="Center" Width="215" Grid.Column="2" SelectionChanged="ComboBoxJobFilter_SelectionChanged"/>
+            <Button x:Name="ButtonJobShowAll" Content="Show All" FontSize="15" HorizontalAlignment="Right" Height="25" Margin="0,0,5,0" Grid.Row="1" 
+        VerticalAlignment="Center" Width="65" Grid.Column="2" Click="ButtonJobShowAll_Click"/>
+            <Button x:Name="ButtonJobAdd" Content="Add" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="-130,0,0,0" Grid.Row="3" 
+                    VerticalAlignment="Center" Width="120" Grid.Column="2" Click="ButtonJobAdd_Click"/>
+            <Button x:Name="ButtonJobRemove" Content="Remove" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="-390,0,0,0" Grid.Row="3" 
+                    VerticalAlignment="Center" Width="120" Grid.Column="2" Click="ButtonJobRemove_Click"/>
+            <Button x:Name="ButtonJobComplete" Content="Complete" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="130,0,0,0" Grid.Row="3" 
+        VerticalAlignment="Center" Width="120" Grid.Column="2" Click="ButtonJobComplete_Click"/>
+            <Button x:Name="ButtonJobCreateReport" Content="Create Report" FontSize="18" HorizontalAlignment="Center" Height="30" Margin="390,0,0,0" Grid.Row="3" 
+VerticalAlignment="Center" Width="120" Grid.Column="2" Click="ButtonJobCreateReport_Click"/>
+            <ListView x:Name="ListViewContractors" Grid.Row="2" Margin="5,0,5,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="              First/Last Name                   |        Start Date        |      Hourly Wage" 
+                                        Width="410"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="ListViewJobs" Grid.Column="2" Grid.Row="2" Margin="5,0,5,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Title                 |   Created Date   |    Cost    |       Completed     |  Contracteor Assigned  |                                    Remark"
+                                        Width="750"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button x:Name="ButtonClose" Content="Close" FontSize="28" VerticalContentAlignment="Top" HorizontalAlignment="Right" 
+                     Height="40" Margin="0,0,10,0" 
+                VerticalAlignment="Center" Width="200" Grid.Column="2" FontWeight="Bold" IsCancel="True" Click="ButtonClose_Click"/>
+            <Image HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,300,0" Source="/filter.png" Width="20" Grid.Row="1"/>
+            
+
+
         </Grid>
     </Grid>
 </Window>
