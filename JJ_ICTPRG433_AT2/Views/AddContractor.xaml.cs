@@ -1,4 +1,6 @@
 ﻿using JJ_ICTPRG433_440_AT2.Helpers;
+using JJ_ICTPRG433_440_AT2.Models;
+using JJ_ICTPRG433_440_AT2.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,10 @@ namespace JJ_ICTPRG433_440_AT2
 
     public partial class AddConstractor : Window
     {
-        public string ContractorFirstName { get; private set; }
-        public string ContractorLastName { get; private set; }
-        public double ContractorHourlyWage { get; private set; }
-        public AddConstractor()
+        RecruitmentSystem recruitmentSystem;
+        public AddConstractor(RecruitmentSystem recruitmentSystem)
         {
+            this.recruitmentSystem = recruitmentSystem;
             InitializeComponent();
             TextBoxContractorFirstName.Focus();
         }
@@ -40,10 +41,13 @@ namespace JJ_ICTPRG433_440_AT2
         {
             if (IsValidData())
             {
-                ContractorFirstName = TextBoxContractorFirstName.Text;
-                ContractorLastName = TextBoxContractorLastName.Text;
-                ContractorHourlyWage = Convert.ToDouble(TextBoxContractorHourlyWage.Text);
-
+                Contractor newContractor = new Contractor()
+                {
+                    FirstName = TextBoxContractorFirstName.Text,
+                    LastName = TextBoxContractorLastName.Text,
+                    HourlyWage = Convert.ToDouble(TextBoxContractorHourlyWage.Text)
+                };
+                recruitmentSystem.AddContractor(newContractor);
                 DialogResult = true;
             }
 

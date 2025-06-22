@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JJ_ICTPRG433_440_AT2.Models
 {
-    class Contractor
+    public class Contractor
     {
         public string Id {  get; set; }
         public string FirstName {  get; set; }

@@ -10,6 +10,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JJ_ICTPRG433_440_AT2.Models;
 using JJ_ICTPRG433_440_AT2.Services;
+using JJ_ICTPRG433_440_AT2.Views;
+using static System.Reflection.Metadata.BlobBuilder;
+using System.IO;
 
 namespace JJ_ICTPRG433_440_AT2
 {
@@ -36,15 +39,10 @@ namespace JJ_ICTPRG433_440_AT2
         }
         private void ButtonContractorAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddConstractor addContractorWindow = new AddConstractor();
+            AddConstractor addContractorWindow = new AddConstractor(_recruitmentSystem);
 
             if (addContractorWindow.ShowDialog() == true)
             {
-                _recruitmentSystem.AddContractor(Guid.NewGuid().ToString(), 
-                    addContractorWindow.ContractorFirstName, 
-                    addContractorWindow.ContractorLastName,
-                    null,
-                    addContractorWindow.ContractorHourlyWage);
                 RefreshContractors();
             }  
         }
@@ -53,7 +51,14 @@ namespace JJ_ICTPRG433_440_AT2
             foreach (var selectedItem in ListViewContractors.SelectedItems)
             {
                 Contractor contractor = (Contractor)selectedItem;
-                _recruitmentSystem.RemoveContractor(contractor);
+
+                var (success, firstName, lastName, jobTitle) = _recruitmentSystem.RemoveContractor(contractor);
+
+                if (!success)
+                {
+                    MessageBox.Show($"{firstName} {lastName} is currently assigned to \"{jobTitle}\"." +
+                            $"\nPlease complete the job before removing the contractor.", "Cannot Remove Contractor", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             RefreshContractors();
         }
@@ -65,12 +70,10 @@ namespace JJ_ICTPRG433_440_AT2
 
         private void ButtonJobAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddJob addJobWindow = new AddJob();
+            AddJob addJobWindow = new AddJob(_recruitmentSystem);
 
             if (addJobWindow.ShowDialog() == true)
             {
-                _recruitmentSystem.AddJob(Guid.NewGuid().ToString(), addJobWindow.JobTitle, DateTime.Now, addJobWindow.JobCost, null, "Not Assigned", "-", null, null);
-
                 RefreshJobs();
             }
         }
@@ -79,6 +82,13 @@ namespace JJ_ICTPRG433_440_AT2
             foreach (var selectedItem in ListViewJobs.SelectedItems)
             {
                 Job job = (Job)selectedItem;
+                if (job.ContractorAssigned.StartsWith("Yes"))
+                {
+                    Contractor contractor = (Contractor)_recruitmentSystem.GetContractorByID(job.ContractorId);
+                    MessageBox.Show($"{contractor.FirstName} {contractor.LastName} is currently assigned to \"{job.Title}\"." +
+                                $"\nThe contractor will be marked as available.", "Job Removal Notice", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    contractor.StartDate = null;
+                }
                 _recruitmentSystem.RemoveJob(job);
             }
             RefreshJobs();
@@ -93,7 +103,31 @@ namespace JJ_ICTPRG433_440_AT2
         private void ButtonJobComplete_Click(object sender, RoutedEventArgs e)
         {
             Job job = (Job)ListViewJobs.SelectedItem;
-            _recruitmentSystem.CompleteJob(job);
+
+            // Check if the job is already completed
+            if (job.ContractorAssigned.StartsWith("Completed"))
+            {
+                MessageBox.Show($"The job \"{job.Title}\" has already been completed. Please select a different job to proceed.",
+                    "Job Already Completed", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            // Check if the job has a contractor assigned
+            else if (!job.ContractorAssigned.StartsWith("Not Assigned"))
+            {
+                Contractor assignedContractor = (Contractor)_recruitmentSystem.GetContractorByID(job.ContractorId);
+
+                // Get user input how many hours contractor spent
+                AddContractorHours addContractorHours = new AddContractorHours(job.Title, assignedContractor.FirstName, assignedContractor.LastName, assignedContractor.HourlyWage);
+                if (addContractorHours.ShowDialog() == true)
+                {
+                    _recruitmentSystem.CompleteJob(job, assignedContractor, addContractorHours.HoursWorkedByContractor);
+                }
+            }
+            // Job is not yet assigned
+            else
+            {
+                MessageBox.Show($"The job \"{job.Title}\" does not have a contractor assigned. Please assign a contractor before marking the job as complete.",
+                    "Contractor Not Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
             RefreshJobs();
             RefreshContractors();
@@ -104,8 +138,37 @@ namespace JJ_ICTPRG433_440_AT2
             Contractor contractor = (Contractor)ListViewContractors.SelectedItem;
             Job job = (Job)ListViewJobs.SelectedItem;
 
-            _recruitmentSystem.AssignContractorToAJob(contractor, job);
-
+            if (contractor == null)
+            {
+                MessageBox.Show("Please select a contractor from the list before proceeding.", "Contractor Not Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (job == null)
+            {
+                MessageBox.Show("Please select a job from the list before assigning a contractor.", "Job Not Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            // Verify that the selected job is not already assigned to a contractor
+            if (job.ContractorAssigned.StartsWith("Not Assigned"))
+            {
+                // Check if the selected contractor is already assigned to another job
+                if (!_recruitmentSystem.IsContractorAssignedToJob(contractor))
+                {
+                    _recruitmentSystem.AssignContractorToAJob(contractor, job);
+                }
+                else
+                {
+                    MessageBox.Show($"{contractor.FirstName} {contractor.LastName} is already assigned to another job. Please select a different contractor.",
+                        "Contractor Already Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"{job.Title} is already in process or completed. Please select another job.",
+                        "Job Already Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             RefreshContractors();
             RefreshJobs();
         }
@@ -186,7 +249,11 @@ namespace JJ_ICTPRG433_440_AT2
                     _recruitmentSystem.SortJobsByCost();
                     break;
                 case 5:
-                    _recruitmentSystem.JobsFilterbyCostRange();
+                    AddJobFilterbyCostRange addJobFilterbyCostRangeWindow = new AddJobFilterbyCostRange();
+                    if (addJobFilterbyCostRangeWindow.ShowDialog() == true)
+                    {
+                        _recruitmentSystem.JobsFilterbyCostRange(addJobFilterbyCostRangeWindow.MinCostRange, addJobFilterbyCostRangeWindow.MaxCostRange);
+                    }
                     break;
             }
             RefreshJobs();
@@ -201,7 +268,13 @@ namespace JJ_ICTPRG433_440_AT2
 
         private void ButtonJobCreateReport_Click(object sender, RoutedEventArgs e)
         {
-            _recruitmentSystem.JobCreateReport();
+            MessageBoxResult result = MessageBox.Show("Do you want to create the report in CSV format?\nOnly visible items in the ListView will be exported.", "Export to CSV", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                string reportName = _recruitmentSystem.JobCreateReport();
+
+                MessageBox.Show($"{reportName} has been successfully created.\nFile location:\n{System.IO.Path.GetFullPath(reportName)}.", "Report Created");
+            }
         }
     }
 }

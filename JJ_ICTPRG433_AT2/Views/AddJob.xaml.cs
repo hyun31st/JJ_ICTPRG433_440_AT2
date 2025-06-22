@@ -1,4 +1,6 @@
 ﻿using JJ_ICTPRG433_440_AT2.Helpers;
+using JJ_ICTPRG433_440_AT2.Models;
+using JJ_ICTPRG433_440_AT2.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +22,10 @@ namespace JJ_ICTPRG433_440_AT2
     /// </summary>
     public partial class AddJob : Window
     {
-        public string JobTitle { get; private set; }
-        public double JobCost { get; private set; }
-        public AddJob()
+        public RecruitmentSystem recruitmentSystem;
+        public AddJob(RecruitmentSystem recruitmentSystem)
         {
+            this.recruitmentSystem = recruitmentSystem;
             InitializeComponent();
             TextBoxJobTitle.Focus();
         }
@@ -32,8 +34,20 @@ namespace JJ_ICTPRG433_440_AT2
         {
             if (IsValidData())
             {
-                JobTitle = TextBoxJobTitle.Text;
-                JobCost = Convert.ToDouble(TextBoxJobCost.Text);
+                Job newJob = new Job()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Title = TextBoxJobTitle.Text,
+                    CreateDate = DateTime.Now,
+                    Cost = Convert.ToDouble(TextBoxJobCost.Text),
+                    CompleteDate = null,
+                    ContractorAssigned = "Not Assigned",
+                    Remark = "-",
+                    ContractorId = null,
+                    ContractorHours = null
+                };
+                recruitmentSystem.AddJob(newJob);
+                
 
                 DialogResult = true;
             }

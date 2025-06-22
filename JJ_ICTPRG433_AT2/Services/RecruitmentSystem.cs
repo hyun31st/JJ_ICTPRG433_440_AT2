@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.IO;
 
 namespace JJ_ICTPRG433_440_AT2.Services
@@ -15,7 +13,7 @@ namespace JJ_ICTPRG433_440_AT2.Services
     /// <summary>
     /// Handles core logic for managing contractors and jobs, including adding, removing and assigning contractors to jobs.
     /// </summary>
-    class RecruitmentSystem
+    public class RecruitmentSystem
     {
         private List<Job> _jobs = [];
         private List<Job> filteredJobs = [];
@@ -23,17 +21,22 @@ namespace JJ_ICTPRG433_440_AT2.Services
         private List<Contractor> _contractors = [];
         private List<Contractor> filteredContractors = [];
 
+        public RecruitmentSystem()
+        {
+
+        }
+
+        public RecruitmentSystem(List<Job>? _jobs = null, List<Contractor>? _contractors = null)
+        {
+            this._jobs = _jobs ?? [];
+            this._contractors = _contractors ?? [];
+        }
         /// <summary>
         /// Adds a new contractor from the user input or predefined examples.
         /// </summary>
-        /// <param name="contractorID">The unique identifier for the contractor.</param>
-        /// <param name="contractorFirstName">The first name of the contractor.</param>
-        /// <param name="contractorLastName">The last name of the contractor.</param>
-        /// <param name="startDate">The start date for the contractor's assignment, or null if not assigned.</param>
-        /// <param name="contractorHourlyWage">The hourly wage rate for the contractor.</param>
-        public void AddContractor(string contractorID, string contractorFirstName, string contractorLastName, DateTime? startDate, double contractorHourlyWage)
+        /// <param name="newContractor">The contractor instance to add, either created from user input.</param>
+        public void AddContractor(Contractor newContractor)
         {
-            Contractor newContractor = new Contractor(contractorID, contractorFirstName, contractorLastName, null, contractorHourlyWage);
             _contractors.Add(newContractor);
         }
 
@@ -41,7 +44,7 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// Removes the selected contractor from the list if they are not currently assigned to any job.
         /// </summary>
         /// <param name="newContractor">The contractor to be removed.</param>
-        public void RemoveContractor(Contractor newContractor)
+        public (bool sucess, string contractorFirstName, string contractorLastName, string jobTitle) RemoveContractor(Contractor newContractor)
         {
             foreach (var job in _jobs)
             {
@@ -49,13 +52,12 @@ namespace JJ_ICTPRG433_440_AT2.Services
                 {
                     if (job.ContractorAssigned.StartsWith("Yes"))
                     {
-                        MessageBox.Show($"{newContractor.FirstName} {newContractor.LastName} is currently assigned to \"{job.Title}\"." +
-                            $"\nPlease complete the job before removing the contractor.", "Cannot Remove Contractor", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
+                        return (false, newContractor.FirstName, newContractor.LastName, job.Title);
                     }
                 }
             }
             _contractors.Remove(newContractor);
+            return (true, string.Empty, string.Empty, string.Empty);
         }
 
         /// <summary>
@@ -70,18 +72,9 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// <summary>
         /// Adds a new job from the user input or predefined examples.
         /// </summary>
-        /// <param name="id">The unique identifier for the job.</param>
-        /// <param name="title">The title of the job.</param>
-        /// <param name="createDate">The created date for the job.</param>
-        /// <param name="cost">The cost of the job.</param>
-        /// <param name="completeDate">The completed date for the job.</param>
-        /// <param name="contractorAssigned">The current assignment status of the job (e.g., 'Not Assigned', 'Yes', or 'Completed').</param>
-        /// <param name="remark">Additional remarks or notes about the job.</param>
-        /// <param name="contractorID">The assigned contractor's ID.</param>
-        /// <param name="contractorHours">The number of hours worked by the contractor.</param>
-        public void AddJob(string id, string title, DateTime? createDate, double cost, DateTime? completeDate, string contractorAssigned, string remark, string? contractorID, double? contractorHours)
+        /// <param name="newJob">The job instance to add, either created from user input.</param>
+        public void AddJob(Job newJob)
         {
-            Job newJob = new Job(id, title, createDate, cost, completeDate, contractorAssigned, remark, contractorID, contractorHours);
             _jobs.Add(newJob);
         }
 
@@ -92,13 +85,6 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// <param name="newJob">The job to be removed.</param>
         public void RemoveJob(Job newJob)
         {
-            if (newJob.ContractorAssigned.StartsWith("Yes"))
-            {
-                Contractor contractor = (Contractor)GetContractorByID(newJob.ContractorId);
-                MessageBox.Show($"{contractor.FirstName} {contractor.LastName} is currently assigned to \"{newJob.Title}\"." +
-                            $"\nThe contractor will be marked as available.", "Job Removal Notice", MessageBoxButton.OK, MessageBoxImage.Warning);
-                contractor.StartDate = null;
-            }   
             _jobs.Remove(newJob);
         }
 
@@ -221,17 +207,17 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// Filters the job list to show only jobs within user selected cost range.
         /// Jobs outside the selected range are temporarily stored in <c>outOfRangeFilteredJobs</c>
         /// </summary>
-        public void JobsFilterbyCostRange()
+        /// <param name="minCostRange">The minimum job cost to include.</param>
+        /// <param name="maxCostRange">The maximum job cost to include.</param>
+        public void JobsFilterbyCostRange(double minCostRange, double maxCostRange)
         {
-            AddJobFilterbyCostRange addJobFilterbyCostRangeWindow = new AddJobFilterbyCostRange();
-            if (addJobFilterbyCostRangeWindow.ShowDialog() == true)
+
+            foreach (var job in _jobs.Where(j => j.Cost < minCostRange || j.Cost > maxCostRange).ToList())
             {
-                foreach (var job in _jobs.Where(j => j.Cost < addJobFilterbyCostRangeWindow.MinCostRange || j.Cost > addJobFilterbyCostRangeWindow.MaxCostRange).ToList())
-                {
-                    outOfRangeFilteredJobs.Add(job);
-                }
-                _jobs = _jobs.Where(j => j.Cost >= addJobFilterbyCostRangeWindow.MinCostRange && j.Cost <= addJobFilterbyCostRangeWindow.MaxCostRange).ToList();
+                outOfRangeFilteredJobs.Add(job);
             }
+            _jobs = _jobs.Where(j => j.Cost >= minCostRange && j.Cost <= maxCostRange).ToList();
+            
         }
 
         /// <summary>
@@ -260,44 +246,11 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// <param name="selectedJob">The job to assign the contractor to. Must not be null or already in progress or completed.</param>
         public void AssignContractorToAJob(Contractor selectedContractor, Job selectedJob)
         {
-            if (selectedContractor == null)
-            {
-                MessageBox.Show("Please select a contractor from the list before proceeding.", "Contractor Not Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (selectedJob == null)
-            {
-                MessageBox.Show("Please select a job from the list before assigning a contractor.", "Job Not Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Verify that the selected job is not already assigned to a contractor
-            if (selectedJob.ContractorAssigned.StartsWith("Not Assigned"))
-            {
-                // Check if the selected contractor is already assigned to another job
-                if (IsContractorAssignedToJob(selectedContractor))
-                {
-                    // Assign the contractor to the job and set their start date
-                    selectedContractor.StartDate = DateTime.Now;
-                    selectedJob.ContractorAssigned = "Yes";
-                    selectedJob.ContractorId = selectedContractor.Id;
-                    selectedJob.Remark = "In progress-" + selectedContractor.FirstName + " " + selectedContractor.LastName;
-                }
-                else
-                {
-                    MessageBox.Show($"{selectedContractor.FirstName} {selectedContractor.LastName} is already assigned to another job. Please select a different contractor.",
-                        "Contractor Already Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-            }
-            else
-            {
-                MessageBox.Show($"{selectedJob.Title} is already in process or completed. Please select another job.",
-                        "Job Already Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
+            // Assign the contractor to the job and set their start date
+            selectedContractor.StartDate = DateTime.Now;
+            selectedJob.ContractorAssigned = "Yes";
+            selectedJob.ContractorId = selectedContractor.Id;
+            selectedJob.Remark = "In progress-" + selectedContractor.FirstName + " " + selectedContractor.LastName;
         }
 
         /// <summary>
@@ -305,65 +258,37 @@ namespace JJ_ICTPRG433_440_AT2.Services
         /// The assigned contractor is returning to the available pool.
         /// </summary>
         /// <param name="selectedJob">The job to be completed.</param>
-        public void CompleteJob(Job selectedJob)
+        /// <param name="assignedContractor">The contractor assigned to the job; their start date will be cleared.(Rreturning the contractor to the available pool)</param>
+        /// <param name="HoursWorkedByContractor">The number of hours the contractor worked on this job.</param>
+        public void CompleteJob(Job selectedJob, Contractor assignedContractor, double HoursWorkedByContractor)
         {
-            // Check if the job is already completed
-            if (selectedJob.ContractorAssigned.StartsWith("Completed"))
-            {
-                MessageBox.Show($"The job \"{selectedJob.Title}\" has already been completed. Please select a different job to proceed.",
-                    "Job Already Completed", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            // Check if the job has a contractor assigned
-            else if (!selectedJob.ContractorAssigned.StartsWith("Not Assigned"))
-            {
-                Contractor contractor = (Contractor)GetContractorByID(selectedJob.ContractorId);
+            // Rreturning the contractor to the available pool
+            assignedContractor.StartDate = null;
 
-                // Get user input how many hours contractor spent
-                AddContractorHours addContractorHours = new AddContractorHours(selectedJob.Title, contractor.FirstName, contractor.LastName, contractor.HourlyWage);
-                if (addContractorHours.ShowDialog() == true)
-                {
+            selectedJob.CompleteDate = DateTime.Now;
+            selectedJob.ContractorAssigned = "Completed";
 
-                    // Rreturning the contractor to the available pool
-                    contractor.StartDate = null;
-
-                    selectedJob.CompleteDate = DateTime.Now;
-                    selectedJob.ContractorAssigned = "Completed";
-
-                    string remark = selectedJob.Remark;
-                    remark = remark.Replace("In progress-", "");
-                    selectedJob.ContractorHours = addContractorHours.HoursWorkedByContractor;
-                    selectedJob.Remark = remark + " ";
-
-                }
-            }
-            // Job is not yet assigned
-            else
-            {
-                MessageBox.Show($"The job \"{selectedJob.Title}\" does not have a contractor assigned. Please assign a contractor before marking the job as complete.",
-                    "Contractor Not Assigned", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            string remark = selectedJob.Remark;
+            remark = remark.Replace("In progress-", "");
+            selectedJob.ContractorHours = HoursWorkedByContractor;
+            selectedJob.Remark = remark + " ";
         }
 
         /// <summary>
         /// Creates a CSV report containing the currently visible jobs in the list.
         /// </summary>
-        public void JobCreateReport()
+        public string JobCreateReport()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to create the report in CSV format?\nOnly visible items in the ListView will be exported.", "Export to CSV", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            string writeText = "Title,Created Date,Cost,Completed Date,Contractor Assigned,Remark,Worked Hours by Contractor\n";
+            string dateTimeNow = DateTime.Now.ToString("yyyyMMdd HHmmss");
+            string reportName = $"Job Report - {dateTimeNow}.csv";
+            foreach (var job in _jobs)
             {
-                string writeText = "Title,Created Date,Cost,Completed Date,Contractor Assigned,Remark,Worked Hours by Contractor\n";
-                string dateTimeNow = DateTime.Now.ToString("yyyyMMdd HHmmss");
-                string reportName = $"Job Report - {dateTimeNow}.csv";
-                foreach (var job in _jobs)
-                {
-                    writeText += job.Title + "," + job.CreateDate + "," + job.Cost + "," + job.CompleteDate + "," + job.ContractorAssigned + "," + job.Remark + "," + job.ContractorHours + "\n";
+                writeText += job.Title + "," + job.CreateDate + "," + job.Cost + "," + job.CompleteDate + "," + job.ContractorAssigned + "," + job.Remark + "," + job.ContractorHours + "\n";
 
-                }
-                File.WriteAllText(reportName, writeText);
-
-                MessageBox.Show($"{reportName} has been successfully created.\nFile location:\n{Path.GetFullPath(reportName)}.", "Report Created");
             }
+            File.WriteAllText(reportName, writeText);
+            return reportName;
         }
 
         /// <summary>
@@ -382,11 +307,11 @@ namespace JJ_ICTPRG433_440_AT2.Services
                 {
                     if (job.ContractorAssigned.StartsWith("Yes"))
                     {
-                        return false;
+                        return true;
                     }
                 }
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -413,16 +338,22 @@ namespace JJ_ICTPRG433_440_AT2.Services
         public void AddContractorExamples()
         {
             // Add 10 sample contractors
-            AddContractor(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
-            AddContractor(Guid.NewGuid().ToString(), "Bob", "Johnson", null, 38.5);
-            AddContractor(Guid.NewGuid().ToString(), "Charlie", "Lee", null, 45.0);
-            AddContractor(Guid.NewGuid().ToString(), "Diana", "Brown", null, 41.0);
-            AddContractor(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
-            AddContractor(Guid.NewGuid().ToString(), "Fiona", "Davis", null, 43.5);
-            AddContractor(Guid.NewGuid().ToString(), "George", "Taylor", null, 40.0);
-            AddContractor(Guid.NewGuid().ToString(), "Helen", "Martin", null, 44.0);
-            AddContractor(Guid.NewGuid().ToString(), "Ian", "Walker", null, 37.5);
-            AddContractor(Guid.NewGuid().ToString(), "Julia", "White", null, 46.0);
+            List<Contractor> contractors = new List<Contractor> {
+                new Contractor(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0),
+                new Contractor(Guid.NewGuid().ToString(), "Bob", "Johnson", null, 38.5),
+                new Contractor(Guid.NewGuid().ToString(), "Charlie", "Lee", null, 45.0),
+                new Contractor(Guid.NewGuid().ToString(), "Diana", "Brown", null, 41.0),
+                new Contractor(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0),
+                new Contractor(Guid.NewGuid().ToString(), "Fiona", "Davis", null, 43.5),
+                new Contractor(Guid.NewGuid().ToString(), "George", "Taylor", null, 40.0),
+                new Contractor(Guid.NewGuid().ToString(), "Helen", "Martin", null, 44.0),
+                new Contractor(Guid.NewGuid().ToString(), "Ian", "Walker", null, 37.5),
+                new Contractor(Guid.NewGuid().ToString(), "Julia", "White", null, 46.0)
+            };
+            foreach (var item in contractors)
+            {
+                AddContractor(item);
+            }
         }
 
         /// <summary>
@@ -431,16 +362,23 @@ namespace JJ_ICTPRG433_440_AT2.Services
         public void AddJobxamples()
         {
             // Add 10 sample jobs
-            AddJob(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 240.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Elec' Maintenance", DateTime.Now, 250.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "HVAC Installation", DateTime.Now, 300.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Painting Project", DateTime.Now, 220.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Plumbing Repair", DateTime.Now, 180.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Roof Inspection", DateTime.Now, 195.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Win' Replacement", DateTime.Now, 275.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Flooring Upgrade", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Gate Installation", DateTime.Now, 260.0, null, "Not Assigned", "-", null, null);
-            AddJob(Guid.NewGuid().ToString(), "Lighting Setup", DateTime.Now, 230.0, null, "Not Assigned", "-", null, null);
+            List<Job> jobs = new List<Job> {
+                new Job(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 240.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 240.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Elec' Maintenance", DateTime.Now, 250.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "HVAC Installation", DateTime.Now, 300.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Painting Project", DateTime.Now, 220.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Plumbing Repair", DateTime.Now, 180.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Roof Inspection", DateTime.Now, 195.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Win' Replacement", DateTime.Now, 275.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Flooring Upgrade", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Gate Installation", DateTime.Now, 260.0, null, "Not Assigned", "-", null, null),
+                new Job(Guid.NewGuid().ToString(), "Lighting Setup", DateTime.Now, 230.0, null, "Not Assigned", "-", null, null)};
+
+            foreach (var item in jobs)
+            {
+                AddJob(item);
+            }
         }
     }
 

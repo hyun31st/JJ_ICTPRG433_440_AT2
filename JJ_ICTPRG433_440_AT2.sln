@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JJ_ICTPRG433_440_AT2", "JJ_ICTPRG433_AT2\JJ_ICTPRG433_440_AT2.csproj", "{EBB1472C-8366-4E49-A532-52915D259CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentSystemUnitTests", "RecruitmentSystemUnitTests\RecruitmentSystemUnitTests.csproj", "{976FD8CA-1CA0-4805-BA62-316507527266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EBB1472C-8366-4E49-A532-52915D259CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB1472C-8366-4E49-A532-52915D259CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB1472C-8366-4E49-A532-52915D259CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976FD8CA-1CA0-4805-BA62-316507527266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976FD8CA-1CA0-4805-BA62-316507527266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976FD8CA-1CA0-4805-BA62-316507527266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976FD8CA-1CA0-4805-BA62-316507527266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

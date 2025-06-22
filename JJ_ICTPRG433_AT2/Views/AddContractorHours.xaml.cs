@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using JJ_ICTPRG433_440_AT2.Helpers;
+using JJ_ICTPRG433_440_AT2.Services;
 
 namespace JJ_ICTPRG433_440_AT2.Views
 {
