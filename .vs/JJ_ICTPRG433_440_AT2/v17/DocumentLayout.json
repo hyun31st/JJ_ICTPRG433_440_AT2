@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\jj_ictprg433_at2\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|solutionrelative:jj_ictprg433_at2\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{976FD8CA-1CA0-4805-BA62-316507527266}|RecruitmentSystemUnitTests\\RecruitmentSystemUnitTests.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\recruitmentsystemunittests\\contractorsystemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{976FD8CA-1CA0-4805-BA62-316507527266}|RecruitmentSystemUnitTests\\RecruitmentSystemUnitTests.csproj|solutionrelative:recruitmentsystemunittests\\contractorsystemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{976FD8CA-1CA0-4805-BA62-316507527266}|RecruitmentSystemUnitTests\\RecruitmentSystemUnitTests.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\recruitmentsystemunittests\\jobsystemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{976FD8CA-1CA0-4805-BA62-316507527266}|RecruitmentSystemUnitTests\\RecruitmentSystemUnitTests.csproj|solutionrelative:recruitmentsystemunittests\\jobsystemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\jj_ictprg433_at2\\services\\recruitmentsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|solutionrelative:jj_ictprg433_at2\\services\\recruitmentsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|c:\\users\\hyun3\\onedrive - tafe\\_semester02\\01_tuesday_ictprg433\\assessment 2 c# project\\jj_ictprg433_at2\\jj_ictprg433_at2\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EBB1472C-8366-4E49-A532-52915D259CFA}|JJ_ICTPRG433_AT2\\JJ_ICTPRG433_440_AT2.csproj|solutionrelative:jj_ictprg433_at2\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,25 +31,50 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
-              "RelativeToolTip": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
+              "Title": "ContractorSystemTests.cs",
+              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\RecruitmentSystemUnitTests\\ContractorSystemTests.cs",
+              "RelativeDocumentMoniker": "RecruitmentSystemUnitTests\\ContractorSystemTests.cs",
+              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\RecruitmentSystemUnitTests\\ContractorSystemTests.cs",
+              "RelativeToolTip": "RecruitmentSystemUnitTests\\ContractorSystemTests.cs",
+              "ViewState": "AgIAALwAAAAAAAAAAADwv8wAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T02:32:11.945Z",
+              "WhenOpened": "2025-06-28T11:19:05.913Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "JobSystemTests.cs",
+              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\RecruitmentSystemUnitTests\\JobSystemTests.cs",
+              "RelativeDocumentMoniker": "RecruitmentSystemUnitTests\\JobSystemTests.cs",
+              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\RecruitmentSystemUnitTests\\JobSystemTests.cs",
+              "RelativeToolTip": "RecruitmentSystemUnitTests\\JobSystemTests.cs",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAAABQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-28T11:18:51.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "RelativeToolTip": "JJ_ICTPRG433_AT2\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAuwEMAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T02:32:11.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "RecruitmentSystem.cs",
               "DocumentMoniker": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\Services\\RecruitmentSystem.cs",
               "RelativeDocumentMoniker": "JJ_ICTPRG433_AT2\\Services\\RecruitmentSystem.cs",
               "ToolTip": "C:\\Users\\hyun3\\OneDrive - TAFE\\_Semester02\\01_Tuesday_ICTPRG433\\Assessment 2 C# Project\\JJ_ICTPRG433_AT2\\JJ_ICTPRG433_AT2\\Services\\RecruitmentSystem.cs",
               "RelativeToolTip": "JJ_ICTPRG433_AT2\\Services\\RecruitmentSystem.cs",
-              "ViewState": "AgIAAA4BAAAAAAAAAAAcwCMBAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAHwAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T12:54:37.391Z",
               "EditorCaption": ""

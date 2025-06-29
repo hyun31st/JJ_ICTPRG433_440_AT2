@@ -1,5 +1,6 @@
 ﻿using JJ_ICTPRG433_440_AT2.Models;
 using JJ_ICTPRG433_440_AT2.Services;
+using System;
 
 namespace RecruitmentSystemUnitTests
 
@@ -48,7 +49,6 @@ namespace RecruitmentSystemUnitTests
         {
             //Arrange
             //Setup()
-
             Job newJob = new(Guid.NewGuid().ToString(), "A_HVAC Installation", DateTime.Now, 300.0, null, "Not Assigned", "-", null, null);
 
             //Act
@@ -63,7 +63,6 @@ namespace RecruitmentSystemUnitTests
         {
             //Arrange
             //Setup()
-
             Job newJob = new(Guid.NewGuid().ToString(), "A_HVAC Installation", DateTime.Now, 300.0, null, "Not Assigned", "-", null, null);
 
             //Act
@@ -89,11 +88,10 @@ namespace RecruitmentSystemUnitTests
             Assert.AreEqual(2, resultJobs.Count);
         }
         [TestMethod]
-        public void SortJobs_UpdateJobsCollection_ByTitleAndCostAndCostRange()
+        public void SortJobs_UpdateJobsCollection_ByTitle()
         {
             //Arrange
             //Setup()
-
             Job newJob = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
             recruitmentSystem.AddJob(newJob);
 
@@ -103,19 +101,33 @@ namespace RecruitmentSystemUnitTests
 
             //Assert - By Title
             Assert.AreEqual("Carpentry Work", resultJobs[0].Title.ToString());
-
+        }
+        [TestMethod]
+        public void SortJobs_UpdateJobsCollection_ByCost()
+        {
+            //Arrange
+            //Setup()
+            Job newJob = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AddJob(newJob);
 
             //Act - By Cost
             recruitmentSystem.SortJobsByCost();
-            resultJobs = recruitmentSystem.GetJobs();
+            List<Job> resultJobs = recruitmentSystem.GetJobs();
 
-            //Assert - By Title
+            //Assert - By Cost
             Assert.AreEqual("180", resultJobs[0].Cost.ToString());
-
+        }
+        [TestMethod]
+        public void SortJobs_UpdateJobsCollection_CostRange()
+        {
+            //Arrange
+            //Setup()
+            Job newJob = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AddJob(newJob);
 
             //Act - By Cost Range
-            recruitmentSystem.JobsFilterbyCostRange(180,210);
-            resultJobs = recruitmentSystem.GetJobs();
+            recruitmentSystem.JobsFilterbyCostRange(180, 210);
+            List<Job>resultJobs = recruitmentSystem.GetJobs();
 
             //Assert - By Cost Range
             Assert.AreEqual(2, resultJobs.Count);
@@ -217,7 +229,7 @@ namespace RecruitmentSystemUnitTests
             StringAssert.StartsWith(newJob1.Remark.ToString(), selectedContractor1.FirstName);
         }
         [TestMethod]
-        public void FilterJobs_UpdateJobsCollection_ShowAvailableAndInProgressAndCompleted()
+        public void FilterJobs_UpdateJobsCollection_ShowAvailableJobsOnly()
         {
             //Arrange
             Contractor newContractor1 = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
@@ -245,35 +257,102 @@ namespace RecruitmentSystemUnitTests
 
             //Assert - Show Available Jobs Only
             Assert.AreEqual(2, resultJobs.Count);
-            Assert.AreNotEqual(1, resultJobs.Count);
+        }
+        [TestMethod]
+        public void FilterJobs_UpdateJobsCollection_ShowInProgressJobsOnly()
+        {
+            //Arrange
+            Contractor newContractor1 = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            Contractor newContractor2 = new(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
+            recruitmentSystem.AddContractor(newContractor1);
+            recruitmentSystem.AddContractor(newContractor2);
 
+            Job newJob1 = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
+            Job newJob2 = new(Guid.NewGuid().ToString(), "Flooring Upgrade", DateTime.Now, 275.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AddJob(newJob1);
+            recruitmentSystem.AddJob(newJob2);
+
+            recruitmentSystem.AssignContractorToAJob(newContractor1, newJob1);
+            recruitmentSystem.AssignContractorToAJob(newContractor2, newJob2);
+
+            Contractor selectedContractor1 = (Contractor)recruitmentSystem.GetContractorByID(newJob1.ContractorId);
+            Contractor selectedContractor2 = (Contractor)recruitmentSystem.GetContractorByID(newJob2.ContractorId);
+
+            double hoursWorkedbyContractor = 5;
+            recruitmentSystem.CompleteJob(newJob1, selectedContractor1, hoursWorkedbyContractor);
 
             //Act - Show In Progress Jobs Only
             recruitmentSystem.ShowInProgressJobsOnly();
-            resultJobs = recruitmentSystem.GetJobs();
+            List<Job> resultJobs = recruitmentSystem.GetJobs();
 
             //Assert - Show In Progress Jobs Only
-            Assert.AreEqual(1, resultJobs.Count);
-            Assert.AreNotEqual(2, resultJobs.Count);
+            Assert.AreEqual(newJob2.Id, resultJobs[0].Id);
+        }
+        [TestMethod]
+        public void FilterJobs_UpdateJobsCollection_ShowCompletedJobsOnly()
+        {
+            //Arrange
+            Contractor newContractor1 = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            Contractor newContractor2 = new(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
+            recruitmentSystem.AddContractor(newContractor1);
+            recruitmentSystem.AddContractor(newContractor2);
 
+            Job newJob1 = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
+            Job newJob2 = new(Guid.NewGuid().ToString(), "Flooring Upgrade", DateTime.Now, 275.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AddJob(newJob1);
+            recruitmentSystem.AddJob(newJob2);
+
+            recruitmentSystem.AssignContractorToAJob(newContractor1, newJob1);
+            recruitmentSystem.AssignContractorToAJob(newContractor2, newJob2);
+
+            Contractor selectedContractor1 = (Contractor)recruitmentSystem.GetContractorByID(newJob1.ContractorId);
+            Contractor selectedContractor2 = (Contractor)recruitmentSystem.GetContractorByID(newJob2.ContractorId);
+
+            double hoursWorkedbyContractor = 5;
+            recruitmentSystem.CompleteJob(newJob1, selectedContractor1, hoursWorkedbyContractor);
 
             //Act - Show Completed Jobs Only
             recruitmentSystem.ShowCompletedJobsOnly();
-            resultJobs = recruitmentSystem.GetJobs();
+            List<Job> resultJobs = recruitmentSystem.GetJobs();
 
             //Assert - Show Completed Jobs Only
-            Assert.AreEqual(1, resultJobs.Count);
-            Assert.AreNotEqual(2, resultJobs.Count);
+            Assert.AreEqual(newJob1.Id, resultJobs[0].Id);
+        }
+        [TestMethod]
+        public void FilterJobs_UpdateJobsCollection_ShowAllJobs()
+        {
+            //Arrange
+            Contractor newContractor1 = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            Contractor newContractor2 = new(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
+            recruitmentSystem.AddContractor(newContractor1);
+            recruitmentSystem.AddContractor(newContractor2);
 
+            Job newJob1 = new(Guid.NewGuid().ToString(), "Carpentry Work", DateTime.Now, 210.0, null, "Not Assigned", "-", null, null);
+            Job newJob2 = new(Guid.NewGuid().ToString(), "Flooring Upgrade", DateTime.Now, 275.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AddJob(newJob1);
+            recruitmentSystem.AddJob(newJob2);
+
+            recruitmentSystem.AssignContractorToAJob(newContractor1, newJob1);
+            recruitmentSystem.AssignContractorToAJob(newContractor2, newJob2);
+
+            Contractor selectedContractor1 = (Contractor)recruitmentSystem.GetContractorByID(newJob1.ContractorId);
+            Contractor selectedContractor2 = (Contractor)recruitmentSystem.GetContractorByID(newJob2.ContractorId);
+
+            double hoursWorkedbyContractor = 5;
+            recruitmentSystem.CompleteJob(newJob1, selectedContractor1, hoursWorkedbyContractor);
+
+            recruitmentSystem.ShowAvailableJobsOnly();
+            List<Job> availableJobs = recruitmentSystem.GetJobs();
+            Assert.AreEqual(2, availableJobs.Count);
 
             //Act - Show All Jobs
             recruitmentSystem.ShowAllJobs();
-            resultJobs = recruitmentSystem.GetJobs();
+            List<Job> resultJobs = recruitmentSystem.GetJobs();
 
             //Assert - Show All Jobs
             Assert.AreEqual(4, resultJobs.Count);
-            Assert.AreNotEqual(1, resultJobs.Count);
         }
+
         [TestMethod]
         public void JobCreateReport_CreatesCsvFile_WithCorrectContent()
         {

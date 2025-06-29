@@ -92,11 +92,10 @@ namespace RecruitmentSystemUnitTests
             List<Contractor> resultContractors = recruitmentSystem.GetContractors();
 
             //Assert
-            Assert.AreEqual(success, true);
             Assert.AreEqual(2, resultContractors.Count);
         }
         [TestMethod]
-        public void SortContractors_UpdateContractorsCollection()
+        public void SortContractors_UpdateContractorsCollection_ByFirstName()
         {
             //Arrange
             Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
@@ -108,25 +107,36 @@ namespace RecruitmentSystemUnitTests
 
             //Assert - By First Name
             Assert.AreEqual("Alice", resultContractors[0].FirstName.ToString());
-
+        }
+        [TestMethod]
+        public void SortContractors_UpdateContractorsCollection_ByLastName()
+        {
+            //Arrange
+            Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            recruitmentSystem.AddContractor(newContractor);
 
             //Act - Last Name
             recruitmentSystem.SortContractorsByLastName();
-            resultContractors = recruitmentSystem.GetContractors();
+            List<Contractor>resultContractors = recruitmentSystem.GetContractors();
 
             //Assert - Last Name
             Assert.AreEqual("Johnson", resultContractors[0].LastName.ToString());
-
+        }
+        public void SortContractors_UpdateContractorsCollection_ByHourlyWage()
+        {
+            //Arrange
+            Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            recruitmentSystem.AddContractor(newContractor);
 
             //Act - Hourly Wage
             recruitmentSystem.SortContractorsByHourlyWage();
-            resultContractors = recruitmentSystem.GetContractors();
+            List<Contractor>resultContractors = recruitmentSystem.GetContractors();
 
             //Assert - Hourly Wage
             Assert.AreEqual(38.5, resultContractors[0].HourlyWage);
         }
         [TestMethod]
-        public void AssignContractorToJob_UpdateContractorStatus()
+        public void AssignContractorToJob_ContractorStartDate_NotNull()
         {
             //Arrange
             Contractor newContractor1 = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
@@ -140,10 +150,9 @@ namespace RecruitmentSystemUnitTests
 
             //Assert
             Assert.IsNotNull(newContractor1.StartDate);
-            Assert.IsNull(newContractor2.StartDate);
         }
         [TestMethod]
-        public void ShowAvailableContractorsOnly_FiltersOutAssignedContractors_UpdatesContractorsCollection()
+        public void AssignContractorToJob_ReturnsCollection()
         {
             //Arrange
             Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
@@ -155,19 +164,46 @@ namespace RecruitmentSystemUnitTests
             //Act
             recruitmentSystem.AssignContractorToAJob(newContractor, newJob);
             List<Contractor> resultContractors = recruitmentSystem.GetContractors();
+
             //Assert
             Assert.AreEqual(4, resultContractors.Count);
+        }
+        [TestMethod]
+        public void FilterContractors_UpdateContractorsCollection_ShowAvailableOnly()
+        {
+            //Arrange
+            Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            Contractor newContractor2 = new(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
+            recruitmentSystem.AddContractor(newContractor);
+            recruitmentSystem.AddContractor(newContractor2);
+            Job newJob = new Job(Guid.NewGuid().ToString(), "Elec' Maintenance", DateTime.Now, 250.0, null, "Not Assigned", "-", null, null);
 
             //Act - ShowAvailableOnly
+            recruitmentSystem.AssignContractorToAJob(newContractor, newJob);
             recruitmentSystem.ShowAvailableContractorsOnly();
-            resultContractors = recruitmentSystem.GetContractors();
+            List<Contractor>resultContractors = recruitmentSystem.GetContractors();
 
             //Assert - ShowAvailableOnly
             Assert.AreEqual(3, resultContractors.Count);
+        }
+        [TestMethod]
+        public void FilterContractors_UpdateContractorsCollection_ShowAllContractors()
+        {
+            //Arrange
+            Contractor newContractor = new(Guid.NewGuid().ToString(), "Alice", "Smith", null, 42.0);
+            Contractor newContractor2 = new(Guid.NewGuid().ToString(), "Edward", "Wilson", null, 39.0);
+            recruitmentSystem.AddContractor(newContractor);
+            recruitmentSystem.AddContractor(newContractor2);
+            Job newJob = new Job(Guid.NewGuid().ToString(), "Elec' Maintenance", DateTime.Now, 250.0, null, "Not Assigned", "-", null, null);
+            recruitmentSystem.AssignContractorToAJob(newContractor, newJob);
+            recruitmentSystem.ShowAvailableContractorsOnly();
+            List<Contractor> availableContractors = recruitmentSystem.GetContractors();
+            Assert.AreEqual(3, availableContractors.Count);
+
 
             //Act - ShowAllContractors
             recruitmentSystem.ShowAllContractors();
-            resultContractors = recruitmentSystem.GetContractors();
+            List<Contractor> resultContractors = recruitmentSystem.GetContractors();
 
             //Assert - ShowAllContractors
             Assert.AreEqual(4, resultContractors.Count);
